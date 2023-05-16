@@ -1,0 +1,303 @@
+
+COMMANDS:
+ORDER : [SCRIPT],[buy or sell],[atm,itm1,otm1],[CE,PE]
+TIME: "hh:mm:ss" if empty exe right away
+
+
+
+
+NXT_BLOCK 0 means run exit block
+
+
+/*
+
+{
+    start:
+    {
+        //all entry positions orders
+    }
+    end:
+    {
+        //check if any orders are open and square off them
+    }
+    positions:
+    {
+        script: posobj,
+        script: posobj
+    }
+    orders:
+    {
+        orderid:{script:,status:}
+    }
+    block1:
+    {
+        id:1,
+        condition1:
+        {
+            nxt_block_id:,
+            rules:
+            {
+                rule=""
+                rule2=""
+            },
+            andOnrules:
+            {
+                fun
+            }
+        },
+        condition2:
+        {
+            nxt_block_id:,
+            rules:
+            {
+                rule=""
+                rule2=""
+            },
+            andOnrules:
+            {
+                fun
+            }
+        }
+    },
+    block2:
+    {
+        id:2,
+        condition1:
+        {
+            nxt_block_id:,
+            rules:
+            {
+                rule=""
+                rule2=""
+            },
+            andOnrules:
+            {
+                fun
+            }
+        },
+        condition2:
+        {
+            nxt_block_id:,
+            rules:
+            {
+                rule=""
+                rule2=""
+            },
+            andOnrules:
+            {
+                fun
+            }
+        }
+    }
+}
+*/
+
+/*
+
+sample rules:
+[overal_profit,">=",1000],
+[leg1_ltp,">=",stoploss],
+
+
+*/
+---------------------------------
+
+{
+  status: true,
+  message: 'SUCCESS',
+  errorcode: '',
+  data: [
+    {
+      variety: 'NORMAL',
+      ordertype: 'LIMIT',
+      producttype: 'INTRADAY',
+      duration: 'DAY',
+      price: 19500,
+      triggerprice: 0,
+      quantity: '1',
+      disclosedquantity: '0',
+      squareoff: 0,
+      stoploss: 0,
+      trailingstoploss: 0,
+      tradingsymbol: 'SBIN-EQ',
+      transactiontype: 'BUY',
+      exchange: 'NSE',
+      symboltoken: '3045',
+      ordertag: '',
+      instrumenttype: '',
+      strikeprice: -1,
+      optiontype: '',
+      expirydate: '',
+      lotsize: '1',
+      cancelsize: '0',
+      averageprice: 0,
+      filledshares: '0',
+      unfilledshares: '1',
+      orderid: '230315000000783',
+      text: 'You are trying to place the order with a price which is outside circuit limits.Try placing order within the circut limits.',
+      status: 'rejected',
+      orderstatus: 'rejected',
+      updatetime: '15-Mar-2023 04:12:02',
+      exchtime: '',
+      exchorderupdatetime: '',
+      fillid: '',
+      filltime: '',
+      parentorderid: ''
+    },
+    {
+      variety: 'NORMAL',
+      ordertype: 'LIMIT',
+      producttype: 'INTRADAY',
+      duration: 'DAY',
+      price: 19500,
+      triggerprice: 0,
+      quantity: '1',
+      disclosedquantity: '0',
+      squareoff: 0,
+      stoploss: 0,
+      trailingstoploss: 0,
+      tradingsymbol: 'SBIN-EQ',
+      transactiontype: 'BUY',
+      exchange: 'NSE',
+      symboltoken: '3045',
+      ordertag: '',
+      instrumenttype: '',
+      strikeprice: -1,
+      optiontype: '',
+      expirydate: '',
+      lotsize: '1',
+      cancelsize: '0',
+      averageprice: 0,
+      filledshares: '0',
+      unfilledshares: '1',
+      orderid: '230315000000974',
+      text: 'You are trying to place the order with a price which is outside circuit limits.Try placing order within the circut limits.',
+      status: 'rejected',
+      orderstatus: 'rejected',
+      updatetime: '15-Mar-2023 05:42:57',
+      exchtime: '',
+      exchorderupdatetime: '',
+      fillid: '',
+      filltime: '',
+      parentorderid: ''
+    },
+    {
+      variety: 'NORMAL',
+      ordertype: 'LIMIT',
+      producttype: 'INTRADAY',
+      duration: 'DAY',
+      price: 500,
+      triggerprice: 0,
+      quantity: '5',
+      disclosedquantity: '0',
+      squareoff: 0,
+      stoploss: 0,
+      trailingstoploss: 0,
+      tradingsymbol: 'SBIN-EQ',
+      transactiontype: 'BUY',
+      exchange: 'NSE',
+      symboltoken: '3045',
+      ordertag: '',
+      instrumenttype: '',
+      strikeprice: -1,
+      optiontype: '',
+      expirydate: '',
+      lotsize: '1',
+      cancelsize: '0',
+      averageprice: 0,
+      filledshares: '0',
+      unfilledshares: '5',
+      orderid: '230315000001006',
+      text: 'Your order has been rejected due to Insufficient Funds. Available funds - Rs. 115.60 . You require Rs. 500.00 funds to execute this order.',
+      status: 'rejected',
+      orderstatus: 'rejected',
+      updatetime: '15-Mar-2023 05:50:12',
+      exchtime: '',
+      exchorderupdatetime: '',
+      fillid: '',
+      filltime: '',
+      parentorderid: ''
+    }
+  ]
+}
+
+
+
+
+
+
+
+// {
+//     "token": "44163",
+//     "symbol": "NIFTY06APR2315950PE",
+//     "name": "NIFTY",
+//     "expiry": "06APR2023",
+//     "strike": "1595000.000000",
+//     "lotsize": "50",
+//     "instrumenttype": "OPTIDX",
+//     "exch_seg": "NFO",
+//     "tick_size": "5.000000"
+// },
+
+
+
+
+////https://smartapi.angelbroking.com/publisher-login?api_key=TIlue2pQ
+
+
+ORDER response: {
+  status: true,
+  message: 'SUCCESS',
+  errorcode: '',
+  data: { script: 'BANKNIFTY23MAR2339600PE', orderid: '230320000001260' }
+}
+
+
+
+
+
+    {
+            "symboltoken": "52630",
+            "symbolname": "BANKNIFTY",
+            "instrumenttype": "OPTIDX",
+            "priceden": "1.00",
+            "pricenum": "1.00",
+            "genden": "1.00",
+            "gennum": "1.00",
+            "precision": "2",
+            "multiplier": "-1",
+            "boardlotsize": "1",
+            "exchange": "NFO",
+            "producttype": "INTRADAY",
+            "tradingsymbol": "BANKNIFTY29MAR2340200CE",
+            "symbolgroup": "XX",
+            "strikeprice": "40200.0",
+            "optiontype": "CE",
+            "expirydate": "29MAR2023",
+            "lotsize": "25",
+            "cfbuyqty": "0",
+            "cfsellqty": "0",
+            "cfbuyamount": "0.00",
+            "cfsellamount": "0.00",
+            "buyavgprice": "7.15",
+            "sellavgprice": "6.60",
+            "avgnetprice": "0.00",
+            "netvalue": "-13.75",
+            "netqty": "0",
+            "totalbuyvalue": "178.75",
+            "totalsellvalue": "165.00",
+            "cfbuyavgprice": "0.00",
+            "cfsellavgprice": "0.00",
+            "totalbuyavgprice": "7.15",
+            "totalsellavgprice": "6.60",
+            "netprice": "0.00",
+            "buyqty": "25",
+            "sellqty": "25",
+            "buyamount": "178.75",
+            "sellamount": "165.00",
+            "pnl": "-13.75",
+            "realised": "-13.75",
+            "unrealised": "-0.00",
+            "ltp": "6.9",
+            "close": "9.0"
+        }
