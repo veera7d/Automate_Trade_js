@@ -120,13 +120,18 @@ const get_nxt_thu = () => {
     const currentIndiaDay = currentIndiaTime.getDay();
     const daysUntilNextThursday = currentIndiaDay <= 4 ? 4 - currentIndiaDay : 11 - currentIndiaDay;
     const nextThursday = new Date(currentIndiaTime.getTime() + (daysUntilNextThursday * 24 * 60 * 60 * 1000));
+    console.log("nextThursday: ",nextThursday);
     return nextThursday;
 }
 
 const get_nxt_thu_expiry = async () =>{
     let ind_today = get_ind_time_now();
     let nxt_exp = null;
-    let temp = ind_today.getDate()+constants.months[ind_today.getMonth()]+ind_today.getFullYear();
+    let datee = ind_today.getDate();
+    if(datee<10){
+        datee = '0'+datee;
+    }
+    let temp = datee+constants.months[ind_today.getMonth()]+ind_today.getFullYear();
     let token_file_data = await read_json_file("./data/response.json");
     while(!nxt_exp){
         for(let obj of token_file_data){
@@ -140,8 +145,12 @@ const get_nxt_thu_expiry = async () =>{
             break;
         }
         ind_today.setDate(ind_today.getDate()+1);
+        let datee = ind_today.getDate();
+        if(datee<10){
+            datee = '0'+datee;
+        }
         //console.log(typeof ind_today,typeof temp);
-        temp = ind_today.getDate()+constants.months[ind_today.getMonth()]+ind_today.getFullYear();
+        temp = datee+constants.months[ind_today.getMonth()]+ind_today.getFullYear();
         //console.log(ind_today,temp);
     }
     return nxt_exp;
@@ -167,17 +176,23 @@ const populate_tokendata_to_leg = async (leg)=>{
         }
 
         let nxt_exp = await get_nxt_thu_expiry();
+        let datee = nxt_exp.getDate();
+        if(nxt_exp.getDate()<10){
+            datee = '0'+ nxt_exp.getDate().toString();
+        }else{
+            datee = nxt_exp.getDate().toString();
+        }
         let token_obj = await token_data.get_token_with_symbol_exchange(
         token_data.build_opt_token(
             //script,23,"MAR",23,strike,ce_pe
-            leg.script,nxt_exp.getDate().toString()
+            leg.script,datee
             ,constants.months[nxt_exp.getMonth()]
             ,nxt_exp.getFullYear().toString().substring(2)
             ,strike,leg.option_type
             ),
             constants.exchanges.NFO
         )
-        //console.log("token_obj: ",token_obj);
+        console.log("token_obj: ",token_obj);
         leg.token_obj = token_obj;
 }
 

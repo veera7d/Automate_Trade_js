@@ -26,10 +26,16 @@ const place_option_order = async (legid,script,ce_pe,order_action,quantity,strik
     }
     console.log("ltp in sell atm",ltp);
     let nxt_exp = await util.get_nxt_thu_expiry();
+    let datee = nxt_exp.getDate();
+        if(nxt_exp.getDate()<10){
+            datee = '0'+ nxt_exp.getDate().toString();
+        }else{
+            datee = nxt_exp.getDate().toString();
+        }
     let token_obj = await token_data.get_token_with_symbol_exchange(
         token_data.build_opt_token(
             //script,23,"MAR",23,strike,ce_pe
-            script,nxt_exp.getDate().toString()
+            script,datee
             ,constants.months[nxt_exp.getMonth()]
             ,nxt_exp.getFullYear().toString().substring(2)
             ,strike,ce_pe
