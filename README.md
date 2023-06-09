@@ -1,6 +1,11 @@
 # Automate_Trade_js
 automating intraday trades with no coding needed.
+----------------------------------
+at first place a valid clientcode, apikey and tokens in const "auth_tokens" variable in constants.js
 
+run the master.js file.
+command:- node master.js
+----------------------------------
 -> In BLOCKS the RULE command will be executed with "and" condition within them.
              the CONDITION command will be executed with "or" condition within them.
 
@@ -58,7 +63,7 @@ automating intraday trades with no coding needed.
     }
 }
 
-
+----------------------------------
 
 example:
 {
