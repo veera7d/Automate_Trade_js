@@ -25,6 +25,7 @@ automating intraday trades with no coding needed.
         "TIME":"01:00:00", // the program will wait until this time is crossed in a given day.
         "ORDER":{ // order command is used to place order defined inside it.
             "ENTER":["1","2"] // enter command - used to enter the legs with give list of ids.
+            "SL":["1",40,"PTS"] // place stoploss orders for the legs based on points or PNL.
         },
         "NXT_BLOCK":1 // the execution will go to next block 1(BLOCK1)
     },
@@ -52,7 +53,7 @@ automating intraday trades with no coding needed.
     {
         "TIME":"05:25:00", // waits until this time is crossed and execute all other commands.
         "ORDER":{
-            "EXIT":["ALL"]
+            "EXIT":["ALL"] // "ALL" paramater for exit command will close all the open positions.
         }
     }
 }
@@ -81,6 +82,7 @@ example:
         "TIME":"01:00:00",
         "ORDER":{
             "ENTER":["1","2"]
+            "SL":["1",40,"PTS"]
         },
         "NXT_BLOCK":1
     },
