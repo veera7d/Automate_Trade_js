@@ -8,6 +8,7 @@ const {Leg} = require("./util/leg")
 const order_util = require("./util/order_util");
 const req_body_util = require("./util/req_body_util");
 const file_data_js = require("./data/file_data");
+const auth_util = require("./util/auth_util");
 
 
 const load_leg_objs = async (input_legs)=>{
@@ -179,11 +180,12 @@ const master = async (json_file_path)=>{
 
 
 util.read_json_file("./data/savestate.json")
-.then(data=>{
+.then(async data=>{
+    await auth_util.load_auth();
     if(data.CURR_RUNNING.running<1){
         throw new Error("Not an incomplete file");
     }
-    master("./data/savestate.json")
+    await master("./data/savestate.json")
 })
 .then(data=>console.log("master: end"))
 .catch(err=>{
