@@ -46,7 +46,7 @@ const place_option_order = async (legid,script,ce_pe,order_action,quantity,strik
     try{
     let order_res = await requests.place_order(req_body_util.get_order_body(legid,token_obj,order_action,quantity,order_type,price,triggerprice));
     //console.log(order_res);
-    return order_res;
+    return {order_res:order_res,token_obj:token_obj};
     }catch(ex){
         console.log("order_util place order",ex);
         throw ex;

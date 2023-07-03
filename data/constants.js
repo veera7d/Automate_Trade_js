@@ -44,15 +44,20 @@ const command_const = {
     MODIFY:"MODIFY"
 }
 
-const auth_tokens = {
-    client_code: "D538599",
-    api_key: "TIlue2pQ",
-    
+let auth_tokens = {
+        client_code: "D538599",
+        api_key: "TIlue2pQ",
+        auth_token:"eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJyb2xlcyI6MCwidXNlcnR5cGUiOiJVU0VSIiwiaWF0IjoxNjg4MzU1NDY4LCJleHAiOjE2ODg0NDE4Njh9.ygERG52bNoxdWwVYYGXMA1VTGbdWSTuG9E10Rj1dZI4VIKRUf98y5DMZxboikOaXv7yt31ZvI0ldREDe4cNQSQ",
+        feed_token:"eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJpYXQiOjE2ODgzNTU0NjgsImV4cCI6MTY4ODQ0MTg2OH0.7Y4UmaU5dNWE0BHK0flAkJWwDa9iGkmXLsB99U0SgQ2bqOwEk79SygT1LR81xYfexaZHxdOo-s4x2umqil7rcw",
+        refresh_token:"eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJpYXQiOjE2ODgzNTU0Njh9.qXiLfJAQSzY3gMg6-mNIp4tGQo6J09uXzqFJqzTWkohoLgqE35XFAYojS4KP_SCaa7RAwVbUHtCQqS6My0xbiA"
+    }
 
-    auth_token:"eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJyb2xlcyI6MCwidXNlcnR5cGUiOiJVU0VSIiwiaWF0IjoxNjg0ODc4MjE1LCJleHAiOjE2ODQ5NjQ2MTV9.MlNrU0XL-f8qfFmTryiFU-yQUOleCK65IY2CTRYCKjcUc3d2kPgzv4wWVymcz9abljL36l_qb82GEcFkoR-y8g",
-    feed_token:"eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJpYXQiOjE2ODQ4NzgyMTUsImV4cCI6MTY4NDk2NDYxNX0.9PW6QX8-KZMadw3-JzUCR3gDNZKodyYZIGFmS65k6cQxR6gfcWDHpziBCxfprhN81TZPVC4MYyGbp_WCRUrFNA",
-    refresh_token:"eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJpYXQiOjE2ODQ4NzgyMTV9.0QnTrbu3PGyghHuxP-EAE0rP8MkeNaDPvZ-0CEowB9iGQDDicHiWvt_n0-iw_nchtBCkDuOYLtVGIvUvXC7MGg"
-    
+const get_auth_tokens = ()=>{
+    return auth_tokens;
+}
+
+const set_auth_tokens = (_auth_tokens)=>{
+    auth_tokens = _auth_tokens;
 }
 
 const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
@@ -60,12 +65,10 @@ const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV
 /*
 https://smartapi.angelbroking.com/publisher-login?api_key=TIlue2pQ
 
-
-http://localhost.com/?
-auth_token=eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJyb2xlcyI6MCwidXNlcnR5cGUiOiJVU0VSIiwiaWF0IjoxNjg0ODc4MjE1LCJleHAiOjE2ODQ5NjQ2MTV9.MlNrU0XL-f8qfFmTryiFU-yQUOleCK65IY2CTRYCKjcUc3d2kPgzv4wWVymcz9abljL36l_qb82GEcFkoR-y8g
-feed_token=eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJpYXQiOjE2ODQ4NzgyMTUsImV4cCI6MTY4NDk2NDYxNX0.9PW6QX8-KZMadw3-JzUCR3gDNZKodyYZIGFmS65k6cQxR6gfcWDHpziBCxfprhN81TZPVC4MYyGbp_WCRUrFNA
-refresh_token=eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJpYXQiOjE2ODQ4NzgyMTV9.0QnTrbu3PGyghHuxP-EAE0rP8MkeNaDPvZ-0CEowB9iGQDDicHiWvt_n0-iw_nchtBCkDuOYLtVGIvUvXC7MGg
-
+http://localhost.com/
+auth_token=eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJyb2xlcyI6MCwidXNlcnR5cGUiOiJVU0VSIiwiaWF0IjoxNjg4MzU1NDY4LCJleHAiOjE2ODg0NDE4Njh9.ygERG52bNoxdWwVYYGXMA1VTGbdWSTuG9E10Rj1dZI4VIKRUf98y5DMZxboikOaXv7yt31ZvI0ldREDe4cNQSQ
+feed_token=eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkQ1Mzg1OTkiLCJpYXQiOjE2ODgzNTU0NjgsImV4cCI6MTY4ODQ0MTg2OH0.7Y4UmaU5dNWE0BHK0flAkJWwDa9iGkmXLsB99U0SgQ2bqOwEk79SygT1LR81xYfexaZHxdOo-s4x2umqil7rcw
+refresh_token=eyJhbGciOiJIUzUxMiJ9.eyJ0b2tlbiI6IlJFRlJFU0gtVE9LRU4iLCJpYXQiOjE2ODgzNTU0Njh9.qXiLfJAQSzY3gMg6-mNIp4tGQo6J09uXzqFJqzTWkohoLgqE35XFAYojS4KP_SCaa7RAwVbUHtCQqS6My0xbiA
 */
 
 let headers= {
@@ -74,10 +77,10 @@ let headers= {
     'X-ClientPublicIP': '106.193.147.98',
     'X-MACAddress': 'fe80::216e:6507:4b90:3719',
     'Accept': 'application/json',
-    'X-PrivateKey': auth_tokens.api_key,
+    'X-PrivateKey': get_auth_tokens().api_key,
     'X-UserType': 'USER',
     'X-SourceID': 'WEB',
-    'Authorization': 'Bearer ' + auth_tokens.auth_token
+    'Authorization': 'Bearer ' + get_auth_tokens().auth_token
 }
 
 const exchanges = {
@@ -101,7 +104,7 @@ const order_status_list = {
     canceled:"canceled"
 }
 
-module.exports = {order_status_list,leg_status,steps,scripts,option_types,auth_tokens,order_action,order_types,headers,exchanges,months,lot_size,command_const}
+module.exports = {order_status_list,leg_status,steps,scripts,option_types,get_auth_tokens,set_auth_tokens,order_action,order_types,headers,exchanges,months,lot_size,command_const}
 
 
 

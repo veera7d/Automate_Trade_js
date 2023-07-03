@@ -21,6 +21,8 @@ class Leg{
 
         this.token_obj = null;
         this.ltp = null;
+
+        this.subscribed_ltp = false;
         
         //this.pos_obj = {};
         //this.order_status = null;
@@ -190,7 +192,7 @@ class Leg{
             }
         }
         try{
-            let order_res = await order_util.place_option_order(
+            let {order_res,token_obj} = await order_util.place_option_order(
                 this.legid,
                 this.script,
                 this.option_type,
@@ -200,7 +202,7 @@ class Leg{
                 this.order_type,
                 enter ? this.price : this.sl_price,
                 enter ? null : this.sl_trigger_pricee);
-
+                this.token_obj=token_obj;
             console.log("enter:",enter,order_res);
             if(!order_res.data.orderid){
                 console.log("order_res is empty",order_res);
