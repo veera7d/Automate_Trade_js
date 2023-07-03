@@ -9,6 +9,7 @@ const order_util = require("./util/order_util");
 const req_body_util = require("./util/req_body_util");
 const file_data_js = require("./data/file_data");
 const auth_util = require("./util/auth_util");
+const { Websocket_LTP } = require("./websockets/websoc");
 
 
 const load_leg_objs = async (input_legs)=>{
@@ -37,6 +38,7 @@ const load_leg_objs = async (input_legs)=>{
         leg.sl_trigger_pricee=sl_trigger_pricee;
         leg.enter_excp=enter_excp;
         leg.exit_excp=exit_excp;
+        leg.subscribed_ltp = false;
     }
 }
 
@@ -71,7 +73,7 @@ const update_leg_status = async (file_data)=>{
 }
 
 
-const ltp_update = async (file_data)=>{
+const ltp_update = async (file_data,websoc_ltp)=>{
     let input_legs = file_data.INPUT_LEGS;
     let inline_output = "PNL ";
 
@@ -85,8 +87,13 @@ const blue = "\x1b[34m";
         if(!leg || !leg.token_obj){
             continue;
         }
-        if(leg.status>0){
-            leg.ltp = await order_util.get_ltp(req_body_util.ltp_body(leg.token_obj));
+        if(leg.status>0 && !leg.subscribed_ltp){
+            //leg.ltp = await order_util.get_ltp(req_body_util.ltp_body(leg.token_obj));
+            websoc_ltp.subscribe_ltp(leg.token_obj);
+            leg.subscribed_ltp = true;
+        }
+        if(leg.status<=0 && leg.subscribed_ltp){
+            websoc_ltp.unsubscribe_ltp(leg.token_obj);
         }
         if(leg.entry_price && !leg.exit_price){
             if(leg.order_action===constants.order_action.BUY){
@@ -99,9 +106,9 @@ const blue = "\x1b[34m";
                 console.error("invalid order action",leg.order_action);
             }
             if(leg.pnl>0){
-                inline_output+=(` ID ${blue}${parseInt(legid)} ${green}${parseInt(leg.pnl)}${reset}|`);
+                inline_output+=(` ID ${blue}${parseInt(legid)} ${green}${parseInt(leg.pnl)}${reset}| LTP ${leg.ltp}`);
             }else{
-                inline_output+=(` ID ${blue}${parseInt(legid)} ${red}${parseInt(leg.pnl)}${reset}|`);
+                inline_output+=(` ID ${blue}${parseInt(legid)} ${red}${parseInt(leg.pnl)}${reset}| LTP ${leg.ltp}`);
             }
             
         }
@@ -112,7 +119,7 @@ const blue = "\x1b[34m";
     file_data_js.setFileData(file_data);
     await master_util.save_state();
     setTimeout(()=>{
-        ltp_update(file_data)
+        ltp_update(file_data,websoc_ltp)
     },0.2*1000);
 }
 
@@ -163,7 +170,8 @@ const master = async (json_file_path)=>{
     }else{
         add_leg_objs(file_data.INPUT_LEGS);
     }
-    ltp_update(file_data);
+    const websoc_ltp = new Websocket_LTP(file_data);
+    ltp_update(file_data,websoc_ltp);
     update_leg_status(file_data);
     rule_execution(file_data);
 }
@@ -180,17 +188,17 @@ const master = async (json_file_path)=>{
 
 
 util.read_json_file("./data/savestate.json")
+.then(async (data)=>{await auth_util.load_auth();return data})
 .then(async data=>{
-    await auth_util.load_auth();
     if(data.CURR_RUNNING.running<1){
         throw new Error("Not an incomplete file");
     }
     await master("./data/savestate.json")
 })
 .then(data=>console.log("master: end"))
-.catch(err=>{
+.catch(async err=>{
     console.log("error in savestate read",err);
-    master("./data/master_data.json")
+    await master("./data/master_data.json")
 })
 
 
